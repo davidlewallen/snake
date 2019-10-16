@@ -30,6 +30,30 @@ function getGameStatus() {
   });
 }
 
+function addUnit() {
+  const lastIndex = unitList.length - 1;
+  const lastUnit = unitList[lastIndex];
+  const lastUnitPosition = lastUnit.previousPosition;
+
+  unitList.push({
+    currentPosition: lastUnitPosition,
+    previousPosition: lastUnitPosition
+  });
+}
+
+function eatFruit() {
+  const [player] = unitList;
+  const [playerX, playerY] = player.currentPosition;
+
+  const [fruitX, fruitY] = fruit.currentPosition;
+
+  if (playerX === fruitX && playerY === fruitY) {
+    addUnit();
+
+    fruit.currentPosition = [];
+  }
+}
+
 function drawUnit(ctx, x, y, isPlayer = false) {
   ctx.fillStyle = isPlayer ? "green" : "red";
   ctx.beginPath();
@@ -152,6 +176,8 @@ function loop() {
     setDirection();
 
     drawUnits(ctx);
+
+    eatFruit();
 
     if (getGameStatus()) {
       return clearInterval(gameLoop);
