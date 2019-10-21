@@ -1,5 +1,7 @@
 document.body.onload = init;
 
+let gameTime = 100;
+
 let height = 520;
 let width = 520;
 
@@ -49,6 +51,8 @@ function eatFruit() {
 
   if (playerX === fruitX && playerY === fruitY) {
     addUnit();
+
+    gameTime = gameTime * 0.1;
 
     fruit.currentPosition = [];
   }
@@ -182,7 +186,7 @@ function loop() {
     if (getGameStatus()) {
       return clearInterval(gameLoop);
     }
-  }, 200);
+  }, gameTime);
 }
 
 function addEventsToDirectionalKeys() {
